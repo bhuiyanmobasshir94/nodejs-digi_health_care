@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Post Edit</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css_d/style.css">
+    <link rel="stylesheet" href="css_d/main.css">
+    <style>
+.drawer-controls {
+            padding-top: 10px;
+        }
+.header{        font-size: 37px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.header_other{  font-size: 26px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.post-box{margin: 9px !important; padding: 12px !important;font-size: 22px !important;}
+.post-button{width: 50% !important;margin-left: 9px !important;}
+.field-validation-error{ color: red;}
+.has-success{ color: green;}
+
+</style>
+</head>
+<body>
+<div class="container">
+</br>
+<form action="/post/edit/<%=post.post_id%>" method="post">
+    <div class="form-group">
+        <textarea class="form-control post-box" name="postbox" id="new-post" rows="5"><%=post.post_body%></textarea>
+        <input type="submit" class="btn btn-block btn-primary p-lg-left-right post-button" value="Update">
+        <a type="button" href="/dashboard" class="btn btn-block btn-primary p-lg-left-right post-button">Back</a>
+    </div>
+</form>
+
+</div>
+    <script src="/js_d/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

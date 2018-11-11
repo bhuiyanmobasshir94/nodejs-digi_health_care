@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Moderator Panel</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css_d/style.css">
+    <link rel="stylesheet" href="css_d/main.css">
+<style>
+.drawer-controls {
+            padding-top: 10px;
+        }
+.header{        font-size: 37px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.header_other{  font-size: 26px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.post-box{margin: 9px !important; padding: 12px !important;font-size: 22px !important;}
+.post-button{width: 50% !important;margin-left: 9px !important;}
+.field-validation-error{ color: red;}
+.has-success{ color: green;}
+</style>
+</head>
+<body>
+<%-partial('../includes/header')%>
+<div class="container">
+</br>
+<div class="login_header" style="margin-bottom: 10px;">
+   <p class="has-success"><% massage %></p>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="row">
+           <div class="col-md-6 col-sm-12">
+                <div class="panel-body">
+                    <h4 class="header_other">Blocked Posts</h4>                                   
+                    <div class="border preview">
+                        <div class="border">
+                        <% posts.forEach(function(post){ 
+                            if(post.status == 'Disapproved'){
+                        %>
+                        <div class="border" style="margin: 10px !important;padding: 20px !important;">
+                                <article class="post" data-postid="<%=post.post_id %>">
+                                        <div class="border" style="padding: 20px !important;">
+                                        <h4><%=post.post_body %></h4>
+                                        <h6>Posted by <%= post.posted_username %> on <%=post.post_created %></h6>
+                                        </div>
+                                        <div class="border">
+                                           <div class="form-group row">
+                                              <div class="col-md-7">
+                                                 <form action="/moderator/approve" method="post">
+                                                   <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve">
+                                                   <input type="hidden" value="<%=post.post_id %>" name="post_id">
+                                                 </form> 
+                                              </div>
+                                              <div class="col-md-5">
+                                                 <form action="/moderator/block" method="post">
+                                                   <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                                   <input type="hidden" value="<%=post.post_id %>" name="post_id">
+                                                 </form>     
+                                              </div>
+                                           </div>   
+                                        </div>
+                                        <% comments.forEach(function(comment){
+                                         if(comment.commented_post_id == post.post_id){
+                                     %>
+                                         <article class="post border" data-postid="<%=comment.comment_id%>">
+                                             <h4><%=comment.comment_body%></h4>
+                                             <h6>Commented by <%=comment.commented_username%> on <%=comment.comment_created%></h6>
+                                         </article>
+                                         <% }
+                                     })
+                                     %>                   
+                                     </article>
+                        </div>
+                        <% }
+                    })
+                   %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel-body">
+                    <h4 class="header_other">Approved Posts</h4>                                   
+                    <div class="border preview">
+                        <div class="border">
+                                <% posts.forEach(function(post){ 
+                                    if(post.status == 'Approved'){
+                                %>
+                                <div class="border" style="margin: 10px !important;padding: 20px !important;">
+                                        <article class="post" data-postid="<%=post.post_id %>">
+                                                <div class="border" style="padding: 20px !important;">
+                                                <h4><%=post.post_body %></h4>
+                                                <h6>Posted by <%= post.posted_username %> on <%=post.post_created %></h6>
+                                                </div>
+                                                <div class="border">
+                                                   <div class="form-group row">
+                                                      <div class="col-md-7">
+                                                         <form action="/moderator/approve" method="post">
+                                                           <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve">
+                                                           <input type="hidden" value="<%=post.post_id %>" name="post_id">
+                                                         </form> 
+                                                      </div>
+                                                      <div class="col-md-5">
+                                                         <form action="/moderator/block" method="post">
+                                                           <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                                           <input type="hidden" value="<%=post.post_id %>" name="post_id">
+                                                         </form>     
+                                                      </div>
+                                                   </div>   
+                                                </div>
+                                                <% comments.forEach(function(comment){
+                                                 if(comment.commented_post_id == post.post_id){
+                                             %>
+                                                 <article class="post border" data-postid="<%=comment.comment_id%>">
+                                                     <h4><%=comment.comment_body%></h4>
+                                                     <h6>Commented by <%=comment.commented_username%> on <%=comment.comment_created%></h6>
+                                                 </article>
+                                                 <% }
+                                             })
+                                             %>                   
+                                             </article>
+                                </div>
+                                <% }
+                            })
+                           %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Ads -->
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="row">
+           <div class="col-md-6 col-sm-12">
+                <div class="panel-body">
+                    <h4 class="header_other">Disapproved Ads</h4>                                   
+                    <div class="border preview">
+                        <div class="border">
+                        <% ads.forEach(function(ad){ 
+                            if(ad.status == 'Disapproved'){
+                        %>
+                        <div class="border" style="margin: 10px !important;padding: 20px !important;">
+                                <article class="post" data-postid="<%=ad.ad_id %>">
+                                    <div style="border:  1px;box-shadow: 3px 4px 22px 3px #ccc;padding: 10px;margin-bottom: 20px;margin-top: 20px;">
+                                        
+                                        <tr>
+                                            <td><strong>Name: <%= ad.dr_name %></strong></td><br/>
+                                            <td><small class="form-text text-muted">Speciality: <%= ad.speciality%></small></td><br/>
+                                            <td><small class="form-text text-muted">Address: <%= ad.address%></small></td><br/>
+                                            <td><small class="form-text text-muted">Status: <%= ad.status%></small></td>
+                                        </tr><br/><hr>
+                                        <small class="form-text text-muted">Created at: <%= ad.ad_created%>  </small>
+                                    </div> 
+                                        <div class="border">
+                                           <div class="form-group row">
+                                              <div class="col-md-7">
+                                                 <form action="/doctor/ad/approve" method="post">
+                                                   <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve">
+                                                   <input type="hidden" value="<%= ad.ad_id %>" name="ad_id">
+                                                 </form> 
+                                              </div>
+                                              <div class="col-md-5">
+                                                 <form action="/doctor/ad/block" method="post">
+                                                   <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                                   <input type="hidden" value="<%= ad.ad_id %>" name="ad_id">
+                                                 </form>     
+                                              </div>
+                                           </div>   
+                                        </div>                   
+                                     </article>
+                        </div>
+                        <% }
+                    })
+                   %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel-body">
+                    <h4 class="header_other">Approved Ads</h4>                                   
+                    <div class="border preview">
+                        <div class="border">
+                                <% ads.forEach(function(ad){ 
+                                    if(ad.status == 'Approved'){
+                                %>
+                                <div class="border" style="margin: 10px !important;padding: 20px !important;">
+                                        <article class="post" data-postid="<%=ad.ad_id %>">
+                                            <div style="border:  1px;box-shadow: 3px 4px 22px 3px #ccc;padding: 10px;margin-bottom: 20px;margin-top: 20px;">
+                                                
+                                                <tr>
+                                                    <td><strong>Name: <%= ad.dr_name %></strong></td><br/>
+                                                    <td><small class="form-text text-muted">Speciality: <%= ad.speciality%></small></td><br/>
+                                                    <td><small class="form-text text-muted">Address: <%= ad.address%></small></td><br/>
+                                                    <td><small class="form-text text-muted">Status: <%= ad.status%></small></td>
+                                                </tr><br/><hr>
+                                                <small class="form-text text-muted">Created at: <%= ad.ad_created%>  </small>
+                                            </div> 
+                                                <div class="border">
+                                                   <div class="form-group row">
+                                                      <div class="col-md-7">
+                                                         <form action="/doctor/ad/approve" method="post">
+                                                           <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve">
+                                                           <input type="hidden" value="<%= ad.ad_id %>" name="ad_id">
+                                                         </form> 
+                                                      </div>
+                                                      <div class="col-md-5">
+                                                         <form action="/doctor/ad/block" method="post">
+                                                           <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                                           <input type="hidden" value="<%= ad.ad_id %>" name="ad_id">
+                                                         </form>     
+                                                      </div>
+                                                   </div>   
+                                                </div>                 
+                                             </article>
+                                </div>
+                                <% }
+                            })
+                           %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- -->
+</div>
+<script src="/js_d/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

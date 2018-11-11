@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css_d/style.css">
+    <link rel="stylesheet" href="css_d/main.css">
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+        body {
+                 margin: 0;
+                 padding: 0;
+                 height: 100%;
+                 background-color: #efefef;
+             }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <div class="login-form" style="top: 147.5px;">
+                <div class="login_header" style="margin-bottom: 30px;">Sign in for Digi Health Care.</div>
+    
+                <form method="post">                      
+                    <div class="form-group">
+                        <input  class="form-control" id="email" name="email" placeholder="Email" type="email" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="password" name="password" placeholder="password" type="password" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Sign In">
+                    </div>
+                    <div class="login_forgotpassword"><a href="/signup">Sign Up here</a> | <a href="/forgotpassword">Forget your password</a></div>
+                </form>
+                <div class="login_header" style="margin-bottom: 30px;">
+ 
+                </div>
+            </div>
+            <% errors.forEach(function(error){%>
+                <div class="login_header" style="margin-bottom: 30px;"><p class="field-validation-error"><%= error.msz %></p></div>
+            <%})%>  
+            <div class="login_header" style="margin-bottom: 30px;"><p class="field-validation-error"><%= massage %></p></div>
+        </div>
+    </div>
+    <script src="/js_d/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

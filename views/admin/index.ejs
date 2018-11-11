@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Admin Panel</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css_d/style.css">
+    <link rel="stylesheet" href="css_d/main.css">
+<style>
+.drawer-controls {
+            padding-top: 10px;
+        }
+.header{        font-size: 37px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.header_other{  font-size: 26px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.post-box{margin: 9px !important; padding: 12px !important;font-size: 22px !important;}
+.post-button{width: 50% !important;margin-left: 9px !important;}
+.field-validation-error{ color: red;}
+.has-success{ color: green;}
+</style>
+
+</head>
+<body>
+<%-partial('../includes/header')%>
+<div class="container">
+</br>
+<div class="login_header" style="margin-bottom: 10px;">
+   <p class="has-success"><%= massage %></p>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="row">
+           <div class="col-md-6 col-sm-12">
+                <div class="panel-body">
+                <h4 class="header_other">Approved Users</h4>                                   
+                    <div class="border preview">
+                        <div class="border">
+                        <% users.forEach(function(userEntity){ 
+                            if(userEntity.status == 'Approved'){
+                        %>
+                        <div class="border" style="margin: 10px !important;">
+                         <h4><%=userEntity.username%></h4>
+                          <h6><%=userEntity.user_type%></h6>
+                          <div class="border">
+                                <div class="form-group row">
+                                    <div class="col-md-8">
+                                    <form action="/admin/approve" method="post">
+                                        <table>
+                                        <tr>
+                                        <td>
+                                        <select name="user_type">
+                                           <option value="Admin">Admin</option>			
+                                           <option value="Moderator">Moderator</option>	
+                                           <option value="User">User</option>		
+                                        </select>
+                                        </td>
+                                        <td><input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve"></td>
+                                        </tr>
+                                        </table>
+                                        <input type="hidden" value="<%=userEntity.user_id%>" name="user_id">
+                                    </form> 
+                                    </div>
+                                    <div class="col-md-4">
+                                    <form action="/admin/block" method="post">
+                                        <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                        <input type="hidden" value="<%=userEntity.user_id%>" name="user_id">
+                                    </form>     
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                        <% }
+                    })
+                   %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="panel-body"> 
+                    <h4 class="header_other">Waiting For Approval</h4>                                  
+                    <div class="border preview">
+                        <div class="border">
+                                <% users.forEach(function(userEntity){ 
+                                    if(userEntity.status == 'Disapproved'){
+                                %>
+                                <div class="border" style="margin: 10px !important;">
+                                 <h4><%=userEntity.username%></h4>
+                                  <h6><%=userEntity.user_type%></h6>
+                                  <div class="border">
+                                        <div class="form-group row">
+                                            <div class="col-md-8">
+                                            <form action="/admin/approve" method="post">
+                                                <table>
+                                                <tr>
+                                                <td>
+                                                <select name="user_type">
+                                                   <option value="Admin">Admin</option>			
+                                                   <option value="Moderator">Moderator</option>	
+                                                   <option value="User">User</option>		
+                                                </select>
+                                                </td>
+                                                <td><input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Approve"></td>
+                                                </tr>
+                                                </table>
+                                                <input type="hidden" value="<%=userEntity.user_id%>" name="user_id">
+                                            </form> 
+                                            </div>
+                                            <div class="col-md-4">
+                                            <form action="/admin/block" method="post">
+                                                <input type="submit" class="btn btn-block btn-primary p-lg-left-right" value="Block">
+                                                <input type="hidden" value="<%=userEntity.user_id%>" name="user_id">
+                                            </form>     
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                                <% }
+                            })
+                           %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="/js_d/main.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

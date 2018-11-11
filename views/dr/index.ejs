@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Doctor</title>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/jquery-ui/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css_d/style.css">
+    <link rel="stylesheet" href="/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="/jquery-ui/jquery-ui.structure.css">
+    <link rel="stylesheet" href="/jquery-ui/jquery-ui.theme.css">
+<style>
+.drawer-controls {
+            padding-top: 10px;
+        }
+.header{        font-size: 37px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.header_other{  font-size: 26px !important;       
+                font-weight: 900;
+                color: #0c4da2;
+}
+.post-box{margin: 9px !important; padding: 12px !important;font-size: 22px !important;}
+.post-button{width: 50% !important;margin-left: 9px !important;}
+.field-validation-error{ color: red;}
+.has-success{ color: green;}
+</style>
+
+</head>
+<body>
+<%-partial('../includes/header')%>
+<div class="container">
+</br>
+<div class="col-md-3" style="margin-top: 40px;border: 1px solid #13121230;overflow-y:auto;position:relative;height: 400px;">
+    <h2>Post your Ad</h2>   
+    <form action="/doctor/ad" method= "post">
+            <div class="form-group">
+            <input type="text" class="form-control" placeholder="Doctor's Name" name="name">
+            </div>
+            <div class="form-group">
+            <input type="text" class="form-control" placeholder="Speciality" name="speciality">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="4" placeholder="Address" name="address"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    
+    
+    <div class="col-md-offset-1 col-md-3" style="margin-top: 40px;border: 1px solid #13121230;overflow-y:auto;position:relative;height: 400px;">
+        <h2>My ads</h2>
+        <% ads.forEach(function(ad){
+            %>
+
+            <div style="border:  1px;box-shadow: 3px 4px 22px 3px #ccc;padding: 10px;margin-bottom: 20px;margin-top: 20px;">
+                
+                <tr>
+                    <td><strong>Name: <%= ad.dr_name %></strong></td><br/>
+                    <td><small class="form-text text-muted">Speciality: <%= ad.speciality%></small></td><br/>
+                    <td><small class="form-text text-muted">Address: <%= ad.address%></small></td><br/>
+                    <td><small class="form-text text-muted">Status: <%= ad.status%></small></td>
+                </tr><br/><hr>
+                <small class="form-text text-muted">Created at: <%= ad.ad_created%>  </small>
+            </div>  
+        <%
+        
+        })%>
+    </div>
+
+    <div class="col-md-offset-1 col-md-3" style="margin-top: 40px;border: 1px solid #13121230;overflow-y:auto;position:relative;height: 400px;">
+        <h2>Patients recievings</h2>   
+        <% chats.forEach(function(chat){    
+                   if(chat.reciever_uname == user.username){
+            %>
+    
+                <div style="border:  1px;box-shadow: 3px 4px 22px 3px #ccc;padding: 10px;margin-bottom: 20px;margin-top: 20px;">
+                    
+                    <tr>
+                        <td><strong><%= chat.msz_body %></strong></td>
+                    </tr><br><hr>
+                    <small class="form-text text-muted"><%= chat.sender_uname%> sent to You</small>
+                    <small class="form-text text-muted"> at <%= chat.created_at%>  </small>
+                </div>
+                
+            <% } 
+            
+            })%> 
+    </div>
+
+</div>
+</body>
+</html>
